@@ -1,6 +1,11 @@
 Rails.application.routes.draw do
  namespace :client do
   get '/recipes' => 'recipes#index'
-  get '/recipes' => 'recipes#show'
+  get '/recipes/new' => 'recipes#new'
+  post '/recipes' => 'recipes#create'
+  get '/recipes/:id' => 'recipes#show'
+  get 'recipes/:id/edit' => 'recipes#edit'
+  get '/recipes/id:' => 'recipes#update'
+  delete '/recipes/:id' => 'recipes#destroy'
  end
 end

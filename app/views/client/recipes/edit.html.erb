@@ -1,0 +1,20 @@
+u<%= form_tag "/client/recipes/#{ @recipe["id"]}", method: :patch do %>
+
+  <div>
+    Title: <input type="text" name="title" value="<%= @recipe["title"] %>">
+  </div>
+  <div>
+    Prep Time: <input type="text" name="prep_time" value="<%= @recipe["prep_time"] %>">
+  </div>
+  <div>
+    Ingredients: <input type="text" name="ingredients">
+  </div>
+  <div>
+    Directions: <input type="text" name="directions">
+  </div>
+  <div>
+    Image URL: <input type="text" name="image_url">
+  </div>
+
+  <input type="submit" value="Update Recipe">
+<% end %>

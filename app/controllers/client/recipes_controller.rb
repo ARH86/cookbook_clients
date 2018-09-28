@@ -4,10 +4,62 @@ class Client::RecipesController < ApplicationController
     @recipes = response.parse 
     render 'index.html.erb'
   end
+  
+  def new
+    render 'new.html.erb'
+  end
+
+  def create
+    client_params = {
+                      title: params[:title],
+                      prep_time: params[:prep_time],
+                      ingredients: params[:ingredients],
+                      directions: params[:directions],
+                      image_url: params[:image_url],
+
+                    }
+
+
+    response = HTTP.post(
+                         "http://localhost:3000/api/recipes",
+                         form: client_params
+                         )
+    @recipe = response.parse
+    redirect_to "/client/recipes/#{ @recipe["id"]}"
+  end
 
   def show
     response = HTTP.get("http://localhost:300/api/recipes#{params[:id]}")
     @recipe = response.parse
     render 'show.html.erb'
+  end
+
+  def edit
+    response = HTTP.get("http://localhost:300/api/recipes#{params[:id]}")
+    @recipe_id = params[:id]
+    render 'edit.html.erb'
+  end
+
+  def update
+    client params = {
+                     title: params[:title],
+                     prep_time: params[:prep_time],
+                     ingredients: params[:ingredients],
+                     directions: params[:directions],
+                     image_url: params[:image_url]
+
+                    }
+    response = HTTP.patch(
+                          "http://localhost:3000/api/recipes/#{params[:id]}",
+                          form: client_params
+      )
+
+    @recipe = response.parse
+    redirect_to "/client/recipes/#{ @recipes["id"] }"
+  end
+
+  def destroy
+    HTTP.delete("http://localhost:3000/api/recipes/#{param[:id]}")
+    redirect_to "/client/recipes"
   end
 end
